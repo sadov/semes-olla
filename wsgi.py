@@ -293,12 +293,12 @@ $ git push</pre>
 </section>
 </body>
 </html>'''
-    if environ['PATH_INFO'] == '/dicts':
+    elif environ['PATH_INFO'] == '/dicts':
         response_body = olla.dicts(base)
-    if environ['PATH_INFO'] == '/dict':
+    elif environ['PATH_INFO'] == '/dict':
         lang = environ['QUERY_STRING']
         response_body = olla.get_dict(lang, base)
-    if environ['PATH_INFO'] == '/translate':
+    elif environ['PATH_INFO'] == '/translate':
         src, dst, word = environ['QUERY_STRING'].split('&')
         response_body = olla.translate(src, dst, word, base)
     else:
