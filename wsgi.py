@@ -302,7 +302,7 @@ $ git push</pre>
         src, dst, word = environ['QUERY_STRING'].split('&')
         response_body = olla.translate(src, dst, word, base)
     else:
-        url = environ['HTTP_X_FORWARDED_PROTO'] + '://' \
+        url = 'http://' \
             + environ['HTTP_X_FORWARDED_HOST']
         if environ['HTTP_X_FORWARDED_PORT'] != '80':
            url += ':' + environ['HTTP_X_FORWARDED_PORT']
