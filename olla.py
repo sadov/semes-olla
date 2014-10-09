@@ -9,8 +9,16 @@ def dicts(base=''):
     d = imp.load_source('', base + 'dicts.py')
     return json.dumps(d.dicts)
 
-def get_dict(lang, base=''):
+def get_dict(lang, wtype=None, base=''):
     d = imp.load_source('dict_dst', base + lang)
+    if wtype:
+        out = {}
+        t = imp.load_source('dict_typ', base + 'types.py')
+        for i in d.dictionary.keys():
+            if t.dictionary[i] == wtype:
+                out[i] = d.dictionary[i]
+        d.dictionary = out
+
     return json.dumps(d.dictionary)
 
 def translate(src, dst, word, base=''):

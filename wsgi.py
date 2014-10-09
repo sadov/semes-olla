@@ -296,8 +296,8 @@ $ git push</pre>
     elif environ['PATH_INFO'] == '/dicts':
         response_body = olla.dicts(base)
     elif environ['PATH_INFO'] == '/dict':
-        lang = environ['QUERY_STRING']
-        response_body = olla.get_dict(lang, base)
+        lang, wtype = environ['QUERY_STRING'].split('&')
+        response_body = olla.get_dict(lang, wtype, base)
     elif environ['PATH_INFO'] == '/translate':
         src, dst, word = environ['QUERY_STRING'].split('&')
         word = int(word)
@@ -317,7 +317,7 @@ $ git push</pre>
 
 <body>
 %s/dicts<br/>
-%s/dict?lang<br/>
+%s/dict?lang[&type]<br/>
 %s/translate?src_lang&dst_lang&word<br/>
 </body>
 </html>''' % (url,url,url)
