@@ -300,6 +300,7 @@ $ git push</pre>
         response_body = olla.get_dict(lang, base)
     elif environ['PATH_INFO'] == '/translate':
         src, dst, word = environ['QUERY_STRING'].split('&')
+        word = int(word)
         response_body = olla.translate(src, dst, word, base)
     else:
         url = 'http://' + environ['SERVER_NAME']
