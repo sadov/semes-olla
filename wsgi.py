@@ -1,5 +1,8 @@
 #!/usr/bin/python
 import os
+import olla
+
+base = 'dicts/'
 
 virtenv = os.environ['OPENSHIFT_PYTHON_DIR'] + '/virtenv/'
 virtualenv = os.path.join(virtenv, 'bin/activate_this.py')
@@ -21,7 +24,7 @@ def application(environ, start_response):
         response_body = ['%s: %s' % (key, value)
                     for key, value in sorted(environ.items())]
         response_body = '\n'.join(response_body)
-    else:
+    elif environ['PATH_INFO'] == '/help':
         ctype = 'text/html'
         response_body = '''<!doctype html>
 <html lang="en">
@@ -290,6 +293,34 @@ $ git push</pre>
 </section>
 </body>
 </html>'''
+    if environ['PATH_INFO'] == '/dicts':
+        response_body = olla.dicts(base)
+    if environ['PATH_INFO'] == '/dict':
+        lang = environ['QUERY_STRING']
+        response_body = olla.get_dict(lang, base)
+    if environ['PATH_INFO'] == '/translate':
+        src, dst, word = environ['QUERY_STRING'].split('&')
+        response_body = olla.translate(src, dst, word, base)
+    else:
+        url = environ['HTTP_X_FORWARDED_PROTO'] + '://' \
+            + environ['HTTP_X_FORWARDED_HOST']
+        if environ['HTTP_X_FORWARDED_PORT'] != '80':
+           url += ':' + environ['HTTP_X_FORWARDED_PORT']
+            
+        ctype = 'text/html'
+        response_body = '''<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Dictionary operations</title>
+
+<body>
+%s/dicts<br/>
+%s/dict?lang<br/>
+%s/translate?src_lang&dst_lang&word<br/>
+</body>
+</html>''' % (url
 
     status = '200 OK'
     response_headers = [('Content-Type', ctype), ('Content-Length', str(len(response_body)))]
