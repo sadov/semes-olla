@@ -2,7 +2,7 @@
 import os
 import olla
 
-base = os.getcwd() + 'dicts/'
+base = os.environ['OPENSHIFT_REPO_DIR'] + 'dicts/'
 
 virtenv = os.environ['OPENSHIFT_PYTHON_DIR'] + '/virtenv/'
 virtualenv = os.path.join(virtenv, 'bin/activate_this.py')
