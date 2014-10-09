@@ -17,11 +17,9 @@ def translate(src, dst, word, base=''):
     src = imp.load_source('dict_src', base + src)
     dst = imp.load_source('dict_dst', base + dst)
 
-    return '''
-{"word": "%s",
- "src": "%s",
- "dst": "%s"
-}''' % (`word`, src.dictionary[word], dst.dictionary[word])
+    return json.dumps({"word": word,
+                       "src": src.dictionary[word],
+                       "dst": dst.dictionary[word]})
 
 if __name__ == "__main__":
     base = 'dicts/'
