@@ -303,7 +303,8 @@ $ git push</pre>
             wtype = query[2]
             response_body = olla.get_dict(lang, wtypes, wtype, base)
         else:
-            response_body = olla.get_dict(lang, wtypes=None, wtype=None, base)
+            response_body = olla.get_dict(lang, wtypes=None,
+                                          wtype=None, base=base)
 
     elif environ['PATH_INFO'] == '/translate':
         src, dst, word = environ['QUERY_STRING'].split('&')
