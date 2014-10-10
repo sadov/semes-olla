@@ -74,4 +74,7 @@ dicts = [
 "Swadesh/Slavic/Upper_Sorbian.py",
 "Swadesh/Slavic/Slovene.py",
 "Swadesh/types.py",
+"dicts/CannibEllie/English.py",
+"dicts/CannibEllie/Russian.py",
+
 ]
