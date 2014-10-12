@@ -307,9 +307,13 @@ $ git push</pre>
                                           wtype=None, base=base)
 
     elif environ['PATH_INFO'] == '/translate':
-        src, dst, word = environ['QUERY_STRING'].split('&')
-        word = int(word)
-        response_body = olla.translate(src, dst, word, base)
+        query = environ['QUERY_STRING'].split('&')
+
+        word = int(query[0])
+        src = query[1]
+        dst = query[2:]
+
+        response_body = olla.translate(word, src, dst, base)
     else:
         url = 'http://' + environ['SERVER_NAME']
         if environ['SERVER_PORT'] != '80':
@@ -326,7 +330,7 @@ $ git push</pre>
 <body>
 %s/dicts<br/>
 %s/dict?lang[&types&type]<br/>
-%s/translate?src_lang&dst_lang&word<br/>
+%s/translate?word&src_lang&dst_lang[&dst_lang...]<br/>
 </body>
 </html>''' % (url,url,url)
 

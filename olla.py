@@ -23,16 +23,32 @@ def get_dict(lang, wtypes=None, wtype=None, base=''):
 
     return json.dumps(d.dictionary)
 
-def translate(src, dst, word, base=''):
+def translate(word, src, dst, base=''):
     src = imp.load_source('dict_src', base + src)
-    dst = imp.load_source('dict_dst', base + dst)
+
+    if type(dst) == type(""):
+        dst = [dst]
+
+    out = None
+
+    for d in dst:
+        try:
+            d = imp.load_source('dict_dst', base + d)
+            out = d.dictionary[word]            
+        except KeyError:
+            continue
+        if out:
+            break
+
+    if out == None:
+        out = src.dictionary[word]
 
     return json.dumps({"word": word,
                        "src": src.dictionary[word],
-                       "dst": dst.dictionary[word]})
+                       "dst": out})
 
 if __name__ == "__main__":
     base = 'dicts/'
     #print dicts(base)
-    print get_dict(sys.argv[1], sys.argv[2], sys.argv[3], base)
-    #print translate(sys.argv[1], sys.argv[2], int(sys.argv[3]), base)
+    #print get_dict(sys.argv[1], sys.argv[2], sys.argv[3], base)
+    print translate(int(sys.argv[1]), sys.argv[2], sys.argv[3:], base)
