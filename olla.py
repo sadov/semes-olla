@@ -14,7 +14,7 @@ def get_dict(lang, wtypes=None, wtype=None, base=''):
     print base + lang
     if wtype and wtypes:
         out = {}
-        print base + 'types.py'
+        print base + 'wtypes.py'
         t = imp.load_source('dict_typ', base + wtypes)
         for i in d.dictionary.keys():
             if t.dictionary[i] == wtype:
