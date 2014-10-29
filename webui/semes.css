@@ -1,0 +1,15 @@
+.semes_form {
+}
+
+.semes_select {
+}
+
+div.semes_cell {
+    float: left;
+}
+.semes_cell label {
+    display: block;
+}
+.select2-container {
+    min-width: 10em;
+}

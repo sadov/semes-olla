@@ -1,0 +1,147 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <link href="select2.css" rel="stylesheet"/>
+        <link href="semes.css" rel="stylesheet"/>
+        <script src="jquery-1.4.3.min.js"></script>
+        <script src="select2.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                wtypes = {
+                    '92': "tlsvwohi", 
+                    '93': "tlsvwohi", 
+                    '94': "tlsvwoi", 
+                    '95': "tlsvwohi", 
+                    '96': "tlsvwhid", 
+                    '97': "tlsvwhid", 
+                    '98': "tlsvwhid", 
+                    '99': "tlsvwhi", 
+                    '100': "tlsvwh", 
+                    '101': "tlsvwohi", 
+                    '102': "tlsvwohi", 
+                    '103': "tlsvwo", 
+                    '104': "tlsvwo", 
+                    '105': "tlsvwoh", 
+                    '106': "tlsvwo", 
+                    '107': "tlsvw", 
+                    '108': "tlsvw", 
+                    '109': "tlsvw", 
+                    '110': "tlsvwohid", 
+                    '111': "tlsvwhi", 
+                    '112': "tlsvwhi", 
+                    '113': "tlsvwohid", 
+                    '114': "tlsvwohi", 
+                    '115': "tlsvwohi", 
+                    '116': "tlsvwohid", 
+                    '117': "tlsvwohid", 
+                    '118': "tlsvwohid", 
+                    '119': "tlsvwhid", 
+                    '120': "tlsvwhid", 
+                    '121': "tlsvwhid", 
+                    '122': "tsvwhid", 
+                    '123': "tlsvwi", 
+                    '124': "tlsvwi", 
+                    '125': "tlsvwi", 
+                    '126': "tlsvwhid", 
+                    '127': "tlsvwhd", 
+                    '128': "tlsvwaohid", 
+                    '129': "tlsvwoi", 
+                    '130': "tlsvwoi", 
+                    '131': "tlsvwohid", 
+                    '132': "tlsvwohi", 
+                    '133': "tlsvwohi", 
+                    '134': "tlsvwohid", 
+                    '135': "tlsvwohid", 
+                    '136': "tlsvwohid", 
+                    '137': "tlsvwoid", 
+                    '138': "tlsvwohid", 
+                    '139': "tlsvwohi", 
+                    '140': "tlsvwaohi", 
+                    '141': "tlsvwaohi", 
+                    '142': "tlsvwhi", 
+                    '143': "tlsvwhid", 
+                    '144': "tlsvwhd", 
+                    '145': "tlsvw", 
+                    '146': "tlsvw", 
+                    '169': "tlsvw"
+                };
+                wtype_words = {
+                    "s": "Кто/что?",
+                    "d": "Куда?",
+                    "a": "Кому/чему?",
+                    "o": "Кого/что?",
+                    "h": "Откуда?",
+                    "t": "Когда?",
+                    "l": "Где?",
+                    "w": "Как?",
+                    "i": "Кем/чем?"
+                };
+                words_by_type = {
+                    "t": [{'id': '1', 'text': 'сейчас'}],
+                    "l": [{'id': '1', 'text': 'здесь'}],
+                    "w": [{'id': '1', 'text': 'громко'}],
+                    "h": [{'id': '1', 'text': 'отсюда'}],
+                };
+                jQuery.getJSON(
+                    "http://semes-olla.rhcloud.com/dict?Swadesh/Slavic/Russian.py&Swadesh/wtypes.py&s",
+                    {},
+                    function(data){
+                        var opts = [];
+                        for(key in data){
+                            opts.push({'id': key, 'text': data[key]});
+                        }
+                        words_by_type["s"] = opts;
+                        words_by_type["a"] = opts;
+                        words_by_type["d"] = opts;
+                        words_by_type["o"] = opts;
+                        words_by_type["i"] = opts;
+                    }
+                );
+                jQuery.getJSON(
+                    "http://semes-olla.rhcloud.com/dict?Swadesh/Slavic/Russian.py&Swadesh/wtypes.py&c",
+                    {},
+                    function(data){
+                        var opts = [];
+                        for(key in data){
+                            opts.push({'id': key, 'text': data[key]});
+                        }
+                        words_by_type["v"] = opts;
+                        $(".semes_select").select2({
+                            "data": words_by_type["v"]
+                        }); 
+                        $(".semes_select").change(
+                            function(){
+                                var wt = wtypes[this.value];
+                                var form = $(this).parents("form");
+                                for(c in wt){
+                                    if(wt[c] == 'v'){
+                                        form.find("div.action_cell").insertAfter(
+                                            form.find("div.semes_cell:last")
+                                        );
+                                        continue;
+                                    }
+                                    form.append(
+                                        '<div class="semes_cell"><label for="' + 
+                                        wt[c] + 
+                                        '">' + wtype_words[wt[c]] + 
+                                        "</label>" + 
+                                        '<input class="semes_select" name="' + wt[c] + '"></input></div>'
+                                    );
+                                    $("input[name='" + wt[c] + "']").select2({data: words_by_type[wt[c]]}); 
+                                }
+                            }
+                        );
+                    }
+                )
+            });
+        </script>
+    </head>
+    <body>
+        <form class="semes_form">
+            <div class="semes_cell action_cell">
+                <label for="action"> Действие </label>
+                <input class="semes_select" name="action"/>
+            </div>
+        </form>
+    </body>
+</html>
