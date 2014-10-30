@@ -314,11 +314,10 @@ $ git push</pre>
         dst = query[2:]
 
         response_body = olla.translate(word, src, dst, base)
-    else:
         url = 'http://' + environ['SERVER_NAME']
         if environ['SERVER_PORT'] != '80':
            url += ':' + environ['SERVER_PORT']
-            
+    elif environ['PATH_INFO'] == '/api':        
         ctype = 'text/html'
         response_body = '''<!doctype html>
 <html lang="en">
@@ -333,6 +332,17 @@ $ git push</pre>
 %s/translate?word&src_lang&dst_lang[&dst_lang...]<br/>
 </body>
 </html>''' % (url,url,url)
+    else:
+        url = 'http://' + environ['SERVER_NAME']
+        if environ['SERVER_PORT'] != '80':
+           url += ':' + environ['SERVER_PORT']
+            
+        ctype = 'text/html'
+        f=open('webui/semes_form.html','r')
+        response_body = ""
+        for s in f.readlines():
+           response_body += s
+
 
     status = '200 OK'
     response_headers = [('Content-Type', ctype), ('Content-Length', str(len(response_body)))]
