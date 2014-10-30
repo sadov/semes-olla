@@ -338,7 +338,7 @@ $ git push</pre>
            url += ':' + environ['SERVER_PORT']
             
         ctype = 'text/html'
-        f=open('webui/semes_form.html','r')
+        f=open(os.environ['OPENSHIFT_REPO_DIR'] + 'webui/semes_form.html','r')
         response_body = ""
         for s in f.readlines():
            response_body += s
