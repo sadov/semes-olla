@@ -344,7 +344,7 @@ $ git push</pre>
             'png': 'image/png',
             'gif': 'image/gif',
         }
-        ctype = types.get(environ['PATH'].rsplit(".", 1)[-1], "text/html")
+        ctype = types.get(environ['PATH_INFO'].rsplit(".", 1)[-1], "text/html")
         try:
             f=open(os.environ['OPENSHIFT_REPO_DIR'] + 'webui/' + environ['PATH'],'r')
         except:
