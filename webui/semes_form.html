@@ -112,7 +112,7 @@
                         $(".semes_select").change(
                             function(){
                                 var wt = wtypes[this.value];
-                                var form = $(this).parents("form");
+                                var form = $(this).parents("form").find("div.semes_form_div");
                                 var d;
                                 form.find("div.semes_cell").not(".action_cell").remove();
                                 for(c in wt){
@@ -133,6 +133,23 @@
                                 }
                             }
                         );
+                        msg_json = {};
+                        $(".semes_json").click(
+                            function(){
+                                $(".semes_form").each(
+                                    function(i, form){
+                                        var fjson = {};
+                                        msg_json[i] = fjson;
+                                        $(form).find("input.semes_select").each(
+                                            function(j, sel){
+                                                fjson[sel.name] = sel.value;
+                                            }
+                                        );
+                                    }
+                                );
+                                $("pre#json").html(JSON.stringify(msg_json));
+                            }
+                        );
                     }
                 )
             });
@@ -140,10 +157,21 @@
     </head>
     <body>
         <form class="semes_form">
-            <div class="semes_cell action_cell">
-                <label for="action"> Действие </label>
-                <input class="semes_select" name="action"/>
+            <div class="semes_form_div">
+                <div class="semes_cell action_cell">
+                    <label for="v"> Действие </label>
+                    <input class="semes_select" name="v"/>
+                </div>
+            </div>
+            <div>
+                <a href="#" class="semes_json">Отправить</a>
             </div>
         </form>
+        <div class="semes_json">
+            <h2> JSON: </h1>
+            <pre id="json">
+{}
+            </pre>
+        </div>
     </body>
 </html>

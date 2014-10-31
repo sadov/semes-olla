@@ -13,3 +13,9 @@ div.semes_cell {
 .select2-container {
     min-width: 10em;
 }
+.semes_json {
+    margin-top: 2em;
+}
+.semes_form_div {
+    height: 10em;
+}
