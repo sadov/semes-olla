@@ -113,6 +113,8 @@
                             function(){
                                 var wt = wtypes[this.value];
                                 var form = $(this).parents("form");
+                                var d;
+                                form.find("div.semes_cell").not(".action_cell").remove();
                                 for(c in wt){
                                     if(wt[c] == 'v'){
                                         form.find("div.action_cell").insertAfter(
