@@ -129,7 +129,7 @@
                                         "</label>" + 
                                         '<input class="semes_select" name="' + wt[c] + '"></input></div>'
                                     );
-                                    $("input[name='" + wt[c] + "']").select2({data: words_by_type[wt[c]]}); 
+                                    $("input[name='" + wt[c] + "']").select2({data: words_by_type[wt[c]], multiple: true}); 
                                 }
                             }
                         );
