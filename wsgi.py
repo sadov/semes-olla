@@ -346,7 +346,7 @@ $ git push</pre>
         }
         ctype = types.get(environ['PATH'].rsplit(".", 1)[-1], "text/html")
         try:
-            f=open(os.environ['OPENSHIFT_REPO_DIR'] + 'webui' + environ['PATH'],'r')
+            f=open(os.environ['OPENSHIFT_REPO_DIR'] + 'webui/' + environ['PATH'],'r')
         except:
             f=open(os.environ['OPENSHIFT_REPO_DIR'] + 'webui/semes_form.html','r')
         response_body = ""
