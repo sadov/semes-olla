@@ -337,8 +337,18 @@ $ git push</pre>
         if environ['SERVER_PORT'] != '80':
            url += ':' + environ['SERVER_PORT']
             
-        ctype = 'text/html'
-        f=open(os.environ['OPENSHIFT_REPO_DIR'] + 'webui/semes_form.html','r')
+        types = {
+            'html': 'text/html',
+            'js': 'application/javascript',
+            'css': 'text/css',
+            'png': 'image/png',
+            'gif': 'image/gif',
+        }
+        ctype = types.get(environ['PATH'].rsplit(".", 1)[-1]), "text/html")
+        try:
+            f=open(os.environ['OPENSHIFT_REPO_DIR'] + 'webui' + environ['PATH'],'r')
+        except:
+            f=open(os.environ['OPENSHIFT_REPO_DIR'] + 'webui/semes_form.html','r')
         response_body = ""
         for s in f.readlines():
            response_body += s
