@@ -50,11 +50,11 @@ def translate(word, src, dst, base=''):
 
 def words(lang, base=''):
     d = imp.load_source('dict', base + lang)
-    out = []
+    out = ''
     n = d.dictionary.keys()
     n.sort()
     for i in n:
-        out.append(d.dictionary[i])
+        out += "%d|%s\n" % (i, d.dictionary[i])
 
     return out
 

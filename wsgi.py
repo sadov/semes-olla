@@ -384,7 +384,7 @@ $ git push</pre>
 %s/translate?word&src_lang&dst_lang[&dst_lang...]<br/>
 %s/phrase
 </body>
-</html>''' % (url,url,url)
+</html>''' % (url,url,url,url,url,url)
 
     status = '200 OK'
     response_headers = [('Content-Type', ctype), ('Content-Length', str(len(response_body)))]
