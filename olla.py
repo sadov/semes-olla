@@ -47,6 +47,31 @@ def translate(word, src, dst, base=''):
                        "src": src.dictionary[word],
                        "dst": out})
 
+
+def words(lang, base=''):
+    d = imp.load_source('dict', base + lang)
+    out = []
+    n = d.dictionary.keys()
+    n.sort()
+    for i in n:
+        out.append(d.dictionary[i])
+
+    return out
+
+def word(word, dct, base=''):
+    out = ''
+
+    for d in dct:
+        try:
+            d = imp.load_source('dct', base + d)
+            out = d.dictionary[word]            
+        except KeyError:
+            continue
+        if out:
+            break
+
+    return out
+
 if __name__ == "__main__":
     base = 'dicts/'
     #print dicts(base)
