@@ -348,10 +348,6 @@ $ git push</pre>
             except:
                 response_body = "error"
     elif path == '/phrase':
-        url = 'http://' + environ['SERVER_NAME']
-        if environ['SERVER_PORT'] != '80':
-           url += ':' + environ['SERVER_PORT']
-            
         types = {
             'html': 'text/html',
             'js': 'application/javascript',
@@ -368,6 +364,10 @@ $ git push</pre>
         for s in f.readlines():
            response_body += s
     else:
+        url = 'http://' + environ['SERVER_NAME']
+        if environ['SERVER_PORT'] != '80':
+           url += ':' + environ['SERVER_PORT']
+            
         ctype = 'text/html'
         response_body = '''<!doctype html>
 <html lang="en">
