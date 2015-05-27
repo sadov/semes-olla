@@ -113,9 +113,9 @@ def application(environ, start_response):
 %s/word?word_num&lang[&lang...]<br/>
 %s/dict?lang[&types&type]<br/>
 %s/translate?word&src_lang&dst_lang[&dst_lang...]<br/>
-%s/phrase
+<a href=%s/phrase>%s/phrase</a>
 </body>
-</html>''' % (url,url,url,url,url,url)
+</html>''' % (url,url,url,url,url,url,url)
 
     status = '200 OK'
     response_headers = [('Content-Type', ctype), ('Content-Length', str(len(response_body)))]
