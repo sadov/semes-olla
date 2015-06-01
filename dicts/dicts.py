@@ -71,6 +71,7 @@ dicts = [
 "Swadesh/African/Amharic.py",
 "Swadesh/African/Arabic.py",
 "Swadesh/African/Geez.py",
+"Swadesh/African/Yoruba.py",
 "Swadesh/Indo-Iranian/Hindi.py",
 "Swadesh/Indo-Arian/Marathi.py",
 "Swadesh/Albanian.py",
