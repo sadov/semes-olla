@@ -78,6 +78,10 @@ def application(environ, start_response):
             except:
                 response_body = "error"
     elif path == '/api':        
+        url = 'http://' + environ['SERVER_NAME']
+        if environ['SERVER_PORT'] != '80':
+           url += ':' + environ['SERVER_PORT']
+
         ctype = 'text/html'
         response_body = '''<!doctype html>
 <html lang="en">
