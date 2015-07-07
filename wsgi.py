@@ -306,17 +306,43 @@ $ git push</pre>
             response_body = olla.get_dict(lang, wtypes=None,
                                           wtype=None, base=base)
 
-    elif environ['PATH_INFO'] == '/translate':
+    elif path == '/words':
+        ctype = 'text/plain; charset=utf-8'
+        query = environ['QUERY_STRING'].split('&')
+        lang = query[0]
+        response_body = olla.words(lang, base)
+
+    elif path == '/word':
+        ctype = 'text/plain; charset=utf-8'
         query = environ['QUERY_STRING'].split('&')
 
         word = int(query[0])
-        src = query[1]
-        dst = query[2:]
+        dct = query[1:]
 
-        response_body = olla.translate(word, src, dst, base)
-        url = 'http://' + environ['SERVER_NAME']
-        if environ['SERVER_PORT'] != '80':
-           url += ':' + environ['SERVER_PORT']
+        response_body = olla.word(word, dct, base)
+
+    elif environ['PATH_INFO'] == '/translate':
+        if method == 'GET':
+            query = environ['QUERY_STRING'].split('&')
+
+            word = int(query[0])
+            src = query[1]
+            dst = query[2:]
+
+            response_body = olla.translate(word, src, dst, base)
+            url = 'http://' + environ['SERVER_NAME']
+            if environ['SERVER_PORT'] != '80':
+               url += ':' + environ['SERVER_PORT']
+        elif method == 'POST':
+            try:
+                request_body_size = int(environ['CONTENT_LENGTH'])
+                request_body = environ['wsgi.input'].read(request_body_size)
+            except (TypeError, ValueError):
+                request_body = "0"
+            try:
+                response_body = str(request_body)
+            except:
+                response_body = "error"
     elif environ['PATH_INFO'] == '/api':        
         ctype = 'text/html'
         response_body = '''<!doctype html>
@@ -328,6 +354,8 @@ $ git push</pre>
 
 <body>
 %s/dicts<br/>
+%s/words?lang<br/>
+%s/word?word_num&lang[&lang...]<br/>
 %s/dict?lang[&types&type]<br/>
 %s/translate?word&src_lang&dst_lang[&dst_lang...]<br/>
 </body>
