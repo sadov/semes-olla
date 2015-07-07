@@ -97,7 +97,7 @@ def application(environ, start_response):
 %s/dict?lang[&types&type]<br/>
 %s/translate?word&src_lang&dst_lang[&dst_lang...]<br/>
 </body>
-</html>''' % (url,url,url,url,url,url,url)
+</html>''' % (url,url,url,url,url)
     else:
         url = 'http://' + environ['SERVER_NAME']
         if environ['SERVER_PORT'] != '80':
