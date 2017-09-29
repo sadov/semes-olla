@@ -24,6 +24,7 @@ def get_dict(lang, wtypes=None, wtype=None, base=''):
     return json.dumps(d.dictionary)
 
 def translate(word, src, dst, base=''):
+    print base + src
     src = imp.load_source('dict_src', base + src)
 
     if type(dst) == type(""):
